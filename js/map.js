@@ -11,7 +11,7 @@ function initMap() {
 }
 
 async function loadData() {
-	let res = await fetch('http://localhost:8000/api/maintenance/mapdata')
+	let res = await fetch(API_URL + '/api/maintenance/mapdata', {credentials: 'include'})
 	let data = await res.json()
 	console.log(data)
 	data.forEach(bike => {
