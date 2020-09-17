@@ -86,6 +86,7 @@ function generateBikePopUpContent(bike) {
 			<tr><td>Bike</td><td><b>${bike.bike_number}</b></td></tr>
 			<tr><td>Availablility</td><td>${bike_availability_states[bike.availability_status]}</td></tr>
 			<tr><td>Status</td><td>${bike_states[bike.state]}</td></tr>
+			<tr><td>Note</td><td>${bike.internal_note}</td></tr>
 			${generateLockInfo(bike)}
 		</table>
 	`
