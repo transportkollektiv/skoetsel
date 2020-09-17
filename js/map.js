@@ -105,6 +105,8 @@ function generateTrackerPopUpContent(tracker) {
 		<tr><td>Internal</td><td>${tracker.internal}</td></tr>
 		<tr><td>Battery voltage</td><td>${tracker.battery_voltage} V</td></tr>
 		<tr><td>Tracker Type</td><td>${tracker.tracker_type}</td></tr>
+		<tr><td>Last Message</td><td>${new Date(tracker.last_reported).toLocaleString()}</td></tr>
+		<tr><td>Last Location update</td><td>${new Date(tracker.last_location_reported).toLocaleString()}</td></tr>
 	</table>
 	`
 }
