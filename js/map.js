@@ -29,7 +29,9 @@ async function loadData() {
 				icon: L.BeautifyIcon.icon({
 					icon: 'bicycle',
 					iconShape: 'marker',
-					popupAnchor: [1,-39]
+					popupAnchor: [1,-39],
+					borderColor: getMarkerColor(bike),
+					textColor: getMarkerColor(bike)
 				})
 			})
 			marker.addTo(map);
@@ -39,31 +41,33 @@ async function loadData() {
 			})
 
 			let trackerlayer = L.layerGroup()
-			bike.trackers.forEach(tracker => {
-				line = turf.lineString([[bike.lng, bike.lat], [tracker.lng, tracker.lat]])
-				if (turf.length(line, {units: 'kilometers'}) > 0.8) {
-					L.geoJSON(line, { 
-						style: {color: "red"}
-					}).addTo(map)
-				}
-				L.geoJSON(line).addTo(trackerlayer)
-				let trackerMarker = L.marker([tracker.lat, tracker.lng], {
-					icon: L.BeautifyIcon.icon({
-						icon: tracker.internal ? 'lock' : '',
-						iconStyle: "font-size: 9px;",
-						innerIconAnchor: [0,-10],
-						iconSize: [16,16],
-						iconAnchor: [8,8],
-						textColor: "gray",
-						borderColor: "black",
-						popupAnchor: [0,-10]
-						//borderWidth: 5,
-						//iconShape: 'circle-dot'
-					}),
+			if (bike.bike_availability_states != "IU") {
+				bike.trackers.forEach(tracker => {
+					line = turf.lineString([[bike.lng, bike.lat], [tracker.lng, tracker.lat]])
+					if (turf.length(line, {units: 'kilometers'}) > 0.5) {
+						L.geoJSON(line, { 
+							style: {color: "red"}
+						}).addTo(map)
+					}
+					L.geoJSON(line).addTo(trackerlayer)
+					let trackerMarker = L.marker([tracker.lat, tracker.lng], {
+						icon: L.BeautifyIcon.icon({
+							icon: tracker.internal ? 'lock' : '',
+							iconStyle: "font-size: 9px;",
+							innerIconAnchor: [0,-10],
+							iconSize: [16,16],
+							iconAnchor: [8,8],
+							textColor: "gray",
+							borderColor: "black",
+							popupAnchor: [0,-10]
+							//borderWidth: 5,
+							//iconShape: 'circle-dot'
+						}),
+					})
+					trackerMarker.addTo(trackerlayer)
+					trackerMarker.bindPopup(generateTrackerPopUpContent(tracker))
 				})
-				trackerMarker.addTo(trackerlayer)
-				trackerMarker.bindPopup(generateTrackerPopUpContent(tracker))
-			})
+			}
 
 			marker.on("popupopen", ()=>{
 				trackerlayer.addTo(map)
@@ -109,6 +113,17 @@ function generateTrackerPopUpContent(tracker) {
 		<tr><td>Last Location update</td><td>${new Date(tracker.last_location_reported).toLocaleString()}</td></tr>
 	</table>
 	`
+}
+
+function getMarkerColor(bike) {
+	switch(bike.availability_status){
+		case "IU":
+			return "blue"
+		case "AV":
+			return "#00b026"
+		case "DI":
+			return "gray"
+	}
 }
 
 bike_states = {
