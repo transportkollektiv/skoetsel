@@ -43,29 +43,32 @@ async function loadData() {
 			let trackerlayer = L.layerGroup()
 			if (bike.bike_availability_states != "IU") {
 				bike.trackers.forEach(tracker => {
-					line = turf.lineString([[bike.lng, bike.lat], [tracker.lng, tracker.lat]])
-					if (turf.length(line, {units: 'kilometers'}) > 0.5) {
-						L.geoJSON(line, { 
-							style: {color: "red"}
-						}).addTo(map)
+					if (tracker.lng && tracker.lat)
+					{
+						line = turf.lineString([[bike.lng, bike.lat], [tracker.lng, tracker.lat]])
+						if (turf.length(line, {units: 'kilometers'}) > 0.5) {
+							L.geoJSON(line, { 
+								style: {color: "red"}
+							}).addTo(map)
+						}
+						L.geoJSON(line).addTo(trackerlayer)
+						let trackerMarker = L.marker([tracker.lat, tracker.lng], {
+							icon: L.BeautifyIcon.icon({
+								icon: tracker.internal ? 'lock' : '',
+								iconStyle: "font-size: 9px;",
+								innerIconAnchor: [0,-10],
+								iconSize: [16,16],
+								iconAnchor: [8,8],
+								textColor: "gray",
+								borderColor: "black",
+								popupAnchor: [0,-10]
+								//borderWidth: 5,
+								//iconShape: 'circle-dot'
+							}),
+						})
+						trackerMarker.addTo(trackerlayer)
+						trackerMarker.bindPopup(generateTrackerPopUpContent(tracker))
 					}
-					L.geoJSON(line).addTo(trackerlayer)
-					let trackerMarker = L.marker([tracker.lat, tracker.lng], {
-						icon: L.BeautifyIcon.icon({
-							icon: tracker.internal ? 'lock' : '',
-							iconStyle: "font-size: 9px;",
-							innerIconAnchor: [0,-10],
-							iconSize: [16,16],
-							iconAnchor: [8,8],
-							textColor: "gray",
-							borderColor: "black",
-							popupAnchor: [0,-10]
-							//borderWidth: 5,
-							//iconShape: 'circle-dot'
-						}),
-					})
-					trackerMarker.addTo(trackerlayer)
-					trackerMarker.bindPopup(generateTrackerPopUpContent(tracker))
 				})
 			}
 
