@@ -41,7 +41,7 @@ async function loadData() {
 			})
 
 			let trackerlayer = L.layerGroup()
-			if (bike.bike_availability_states != "IU") {
+			if (bike.availability_status != "IU") {
 				bike.trackers.forEach(tracker => {
 					if (tracker.lng && tracker.lat)
 					{
