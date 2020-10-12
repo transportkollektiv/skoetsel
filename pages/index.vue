@@ -1,73 +1,72 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        skoetsel
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <b-container>
+      <b-row>
+        <b-col>
+          <b-card class="mt-4" title="Vehicles">
+            <b-card-text>
+              <b-progress :max="vehicles.total" show-value>
+                <b-progress-bar :value="vehicles.available" variant="success"></b-progress-bar>
+                <b-progress-bar :value="vehicles.inUse" variant="info"></b-progress-bar>
+                <b-progress-bar :value="vehicles.disabled" variant="danger"></b-progress-bar>
+              </b-progress>
+            </b-card-text>
+          </b-card>
+        </b-col>
+        <b-col>
+          <b-card class="mt-4" title="Trackers">
+            <b-card-text>
+              Soon.
+            </b-card-text>
+          </b-card>
+        </b-col>
+        <b-col>
+          <b-card class="mt-4" title="Stations">
+            <b-card-text>
+              Soon.
+            </b-card-text>
+          </b-card>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      vehicles: {
+        total: 0,
+        available: 0,
+        inUse: 0,
+        disabled: 0,
+      }
+    };
+  },
+  mounted() {
+    this.fetchMapData();
+  },
+  methods: {
+    async fetchMapData() {
+      let data = await this.$axios.$get('/api/maintenance/mapdata');
+      data.forEach((vehicle) => {
+        this.vehicles.total++;
+        // FIXME: mapping of short to long values has to move back into cykel
+        switch (vehicle.availability_status) {
+          case "DI":
+            this.vehicles.disabled++;
+            break;
+          case "IU":
+            this.vehicles.inUse++;
+            break;
+          case "AV":
+            this.vehicles.available++;
+            break;
+        }
+        // vehicle.trackers.forEach((tracker) => {});
+      });
+    },
+  },
+};
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
-</style>
