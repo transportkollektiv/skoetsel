@@ -7,7 +7,11 @@ skoetsel is a maintenance tool for [OpenBike](https://github.com/stadtulm/OpenBi
 ```bash
 # install dependencies
 $ npm install
+```
 
+skoetsel needs to reach your [cykel](https://github.com/stadtulm/cykel) instance. If it's not running on localhost:8000, you may want to set `export API_URL="https://api.dev.bike"`
+
+```bash
 # serve with hot reload at localhost:3000
 $ npm run dev
 

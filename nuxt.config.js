@@ -1,4 +1,10 @@
+const API_URL = process.env.API_URL || 'http://localhost:8000';
+
 export default {
+  env: {
+    API_URL: API_URL
+  },
+
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
 
@@ -39,10 +45,52 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    // https://auth.nuxtjs.org
+    '@nuxtjs/auth',
   ],
 
+  router: {
+    middleware: ['auth'],
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: API_URL,
+    credentials: true
+  },
+
+  auth: {
+    cookie: false,
+    fullPathRedirect: true,
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: '/api/auth/token',
+            method: 'post',
+            propertyName: 'token',
+          },
+          logout: false,
+          user: {
+            url: '/api/user',
+            method: 'get',
+            propertyName: 'username',
+          },
+        },
+        tokenName: 'Authorization',
+        tokenType: 'Token',
+        // future:
+        token: {
+          type: 'Token',
+          name: 'Authorization',
+        },
+      },
+      redirect: {
+        login: '/login',
+        home: '/',
+      },
+    },
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
