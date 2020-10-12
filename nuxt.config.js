@@ -47,6 +47,7 @@ export default {
     '@nuxtjs/axios',
     // https://auth.nuxtjs.org
     '@nuxtjs/auth',
+    'nuxt-leaflet',
   ],
 
   router: {

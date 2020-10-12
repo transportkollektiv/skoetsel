@@ -1,0 +1,25 @@
+<template>
+  <table>
+    <!-- FIXME: i18n -->
+    <tr><td>Tracker ID</td><td><strong>{{ tracker.device_id }}</strong></td></tr>
+    <tr><td>Internal</td><td>{{ tracker.internal }}</td></tr>
+    <tr><td>Battery voltage</td><td>{{ tracker.battery_voltage }} V</td></tr>
+    <tr><td>Tracker Type</td><td>{{ tracker.tracker_type }}</td></tr>
+    <tr><td>Last Message</td><td>{{ last_reported }}</td></tr>
+    <tr><td>Last Location update</td><td>{{ last_location_reported }}</td></tr>
+  </table>
+</template>
+
+<script>
+export default {
+  props: ['tracker'],
+  computed: {
+    last_reported() {
+      return new Date(this.tracker.last_reported).toLocaleString();
+    },
+    last_location_reported() {
+      return new Date(this.tracker.last_location_reported).toLocaleString();
+    },
+  }
+}
+</script>

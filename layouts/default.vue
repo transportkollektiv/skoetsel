@@ -21,6 +21,7 @@
       <b-collapse id="sidebar-collapse" v-model="sidebarVisible">
         <b-nav id="sidebar" class="flex-fill" vertical>
           <b-nav-item to="/"><b-icon icon="house"/></b-nav-item>
+          <b-nav-item to="map"><b-icon icon="map"/></b-nav-item>
         </b-nav>
       </b-collapse>
       <div class="flex-fill">
