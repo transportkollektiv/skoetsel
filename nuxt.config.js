@@ -53,6 +53,10 @@ export default {
     middleware: ['auth'],
   },
 
+  bootstrapVue: {
+    icons: true
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     baseURL: API_URL,

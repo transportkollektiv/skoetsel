@@ -1,62 +1,78 @@
 <template>
-  <div>
-    <Nuxt />
+  <div id="app" class="d-flex flex-column">
+    <b-navbar type="dark" variant="dark" class="app-navbar">
+      <b-button variant="link" v-b-toggle.sidebar-collapse class="sidebar-toggle">
+        <span class="navbar-toggler-icon"></span>
+      </b-button>
+      <b-navbar-brand>skoetsel</b-navbar-brand>
+      <b-collapse id="nav-collapse" is-nav>
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown right>
+            <template v-slot:button-content>
+              <em>{{ user }}</em>
+            </template>
+            <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+    <div class="wrapper flex-fill d-flex align-items-stretch">
+      <!-- FIXME: replace transition by replacing b-collapse with something VBToggle compatible -->
+      <b-collapse id="sidebar-collapse" v-model="sidebarVisible">
+        <b-nav id="sidebar" class="flex-fill" vertical>
+          <b-nav-item to="/"><b-icon icon="house"/></b-nav-item>
+        </b-nav>
+      </b-collapse>
+      <div class="flex-fill">
+        <nuxt />
+      </div>
+    </div>
   </div>
 </template>
 
+<script>
+import { mapState } from 'vuex';
+export default {
+  data() {
+    const isDesktopMQ = window.matchMedia('(min-width: 768px)');
+    return {
+      sidebarVisible: isDesktopMQ.matches
+    }
+  },
+  computed: {
+    ...mapState('auth', ['user'])
+  },
+  methods: {
+    async logout() {
+      await this.$auth.logout();
+      this.$router.push('/');
+    }
+  }
+}
+</script>
+
 <style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+#app {
+  height: 100vh;
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
+.app-navbar {
+  padding-left: 0;
 }
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
+.sidebar-toggle {
+  margin-right: 0.5rem;
 }
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+#sidebar-collapse {
+  display: flex;
 }
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
+#sidebar {
+  background: var(--light);
+  box-shadow: inset -1px 0 5px rgba(0, 0, 0, 10%);
 }
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
+#sidebar .nav-link {
+  padding: 1.25rem 1rem;
+  color: var(--gray);
+}
+#sidebar .nav-link.nuxt-link-exact-active {
+  color: var(--gray-dark);
 }
 </style>
