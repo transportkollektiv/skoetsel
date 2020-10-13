@@ -1,7 +1,6 @@
 <template>
   <table>
     <!-- FIXME: i18n -->
-    <tr><td>Availablility</td><td>{{ availablility }}</td></tr>
     <tr><td>Status</td><td>{{ status }}</td></tr>
     <tr><td>Note</td><td>{{ vehicle.internal_note }}</td></tr>
     <tr v-if="vehicle.lock"><td>Lock ID</td><td>{{ vehicle.lock.lock_id }}</td></tr>
