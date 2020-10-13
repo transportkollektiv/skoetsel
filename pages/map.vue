@@ -157,6 +157,7 @@ export default {
         let marker = L.marker([bike.lat, bike.lng], {
           icon: buildVehicleIcon(bike),
         });
+        marker.bindTooltip(bike.bike_number, { direction: 'top', offset: [0, -32] });
         marker.addTo(this.$refs.map.mapObject);
         marker.on('click', (ev) => this.vehicleClicked(ev, marker, bike));
 
