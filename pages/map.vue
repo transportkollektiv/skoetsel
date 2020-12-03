@@ -57,13 +57,12 @@ const lockIcon = `<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi
 </svg>`;
 
 const getVehicleMarkerColor = (vehicle) => {
-  // FIXME: short codes should not be used for mapping
   switch (vehicle.availability_status) {
-    case 'IU':
+    case 'in_use':
       return 'blue';
-    case 'AV':
+    case 'available':
       return '#00b026';
-    case 'DI':
+    case 'disabled':
       return 'gray';
   }
 };
@@ -166,7 +165,7 @@ export default {
         marker.on('click', (ev) => this.vehicleClicked(ev, marker, bike));
 
         // render red line if bike to tracker distance is too high
-        if (bike.availability_status != 'IU') {
+        if (bike.availability_status != 'in_use') {
           bike.trackers.forEach((tracker) => {
             if (!tracker.lng || !tracker.lat) {
               return;
@@ -206,7 +205,7 @@ export default {
       marker.setIcon(buildVehicleIcon(bike, true));
       this.detail.vehicleMarker = marker;
 
-      if (bike.availability_status != 'IU') {
+      if (bike.availability_status != 'in_use') {
         bike.trackers.forEach((tracker) => {
           if (!tracker.lng || !tracker.lat) {
             return;

@@ -3,18 +3,17 @@
 </template>
 
 <script>
-// FIXME: mapping of short to long values has to move back into cykel
 // FIXME: i18n
 const text_state = {
-  DI: "Disabled",
-  IU: "In Use",
-  AV: "Available",
+  "disabled": "Disabled",
+  "in_use": "In Use",
+  "available": "Available",
 }
 
 const variant_state = {
-  DI: 'danger',
-  IU: 'info',
-  AV: 'success',
+  "disabled": 'danger',
+  "info": 'info',
+  "available": 'success',
 }
 
 export default {
