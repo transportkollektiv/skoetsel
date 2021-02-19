@@ -1,5 +1,5 @@
 <template>
-  <div class="map-wrap">
+  <div class="map-wrap d-flex flex-column">
     <client-only placeholder="Loading...">
       <l-map ref="map" :zoom="13" :center="mapCenter" @ready="onMapReady()">
         <l-tile-layer
@@ -9,31 +9,27 @@
         <l-locate-control :options="locateOptions" />
       </l-map>
     </client-only>
-    <b-sidebar
+    <div
       id="sidebar-footer"
-      lazy
-      right
-      no-header
-      no-slide
-      sidebar-class="detailbar"
-      v-model="detailVisible"
+      class="detailbar"
+      v-if="detailVisible"
     >
-      <template v-slot:footer="{ hide }">
+      <div class="d-flex flex-row justify-content-between p-2">
+        <mapVehicleDetail :vehicle="detail.vehicle" />
+        <mapTrackerDetail :tracker="detail.tracker" v-if="detail.tracker" />
+      </div>
+      <footer>
         <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
           <strong class="mr-auto">
             {{ detail.vehicleType }} #{{ detail.vehicleNumber }}
             <mapVehicleStatusBadge :vehicle="detail.vehicle" />
           </strong>
 
-          <b-button size="sm" @click="hide">Close</b-button>
+          <b-button size="sm" @click="hide()">Close</b-button>
           <!-- FIXME: i18n -->
         </div>
-      </template>
-      <div class="d-flex flex-row justify-content-between p-2">
-        <mapVehicleDetail :vehicle="detail.vehicle" />
-        <mapTrackerDetail :tracker="detail.tracker" v-if="detail.tracker" />
-      </div>
-    </b-sidebar>
+      </footer>
+    </div>
   </div>
 </template>
 
@@ -240,6 +236,9 @@ export default {
       marker.setIcon(buildTrackerIcon(tracker, true));
       this.detail.trackerMarker = marker;
     },
+    hide() {
+      this.detailVisible = false;
+    }
   },
   watch: {
     mapdata() {
@@ -272,19 +271,10 @@ export default {
   width: 100%;
 }
 
-.map-wrap .b-sidebar-outer {
-  position: relative !important;
-}
-
 .detailbar {
-  position: absolute !important;
-  top: auto;
-  right: 0;
-  height: auto;
-  bottom: 0;
-  width: 100%;
   box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15);
   font-size: 0.9rem;
+  z-index: 1035;
 }
 
 .detailbar table {
