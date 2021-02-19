@@ -286,4 +286,8 @@ export default {
   box-shadow: 0 -0.5rem 1rem rgba(0, 0, 0, 0.15);
   font-size: 0.9rem;
 }
+
+.detailbar table {
+  max-width: 50%;
+}
 </style>
