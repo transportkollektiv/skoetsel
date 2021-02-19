@@ -47,6 +47,8 @@ export default {
     '@nuxtjs/axios',
     // https://auth.nuxtjs.org
     '@nuxtjs/auth',
+    // https://pwa.nuxtjs.org
+    '@nuxtjs/pwa',
     'nuxt-leaflet',
   ],
 
