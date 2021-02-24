@@ -163,7 +163,7 @@ export default {
         // render red line if bike to tracker distance is too high
         if (bike.availability_status != 'in_use') {
           bike.trackers.forEach((tracker) => {
-            if (!tracker.lng || !tracker.lat) {
+            if (!tracker.lng || !tracker.lat || tracker.tracker_status != 'active') {
               return;
             }
             let line = turf.lineString([
