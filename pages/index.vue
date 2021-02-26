@@ -52,15 +52,14 @@ export default {
       let data = await this.$axios.$get('/api/maintenance/mapdata');
       data.forEach((vehicle) => {
         this.vehicles.total++;
-        // FIXME: mapping of short to long values has to move back into cykel
         switch (vehicle.availability_status) {
-          case "DI":
+          case "disabled":
             this.vehicles.disabled++;
             break;
-          case "IU":
+          case "in_use":
             this.vehicles.inUse++;
             break;
-          case "AV":
+          case "available":
             this.vehicles.available++;
             break;
         }
