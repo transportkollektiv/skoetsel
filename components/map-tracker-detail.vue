@@ -1,7 +1,7 @@
 <template>
   <table>
     <!-- FIXME: i18n -->
-    <tr><td>Tracker ID</td><td><strong>{{ tracker.device_id }}</strong></td></tr>
+    <tr><td>Tracker ID</td><td><strong>{{ tracker.device_id }}</strong> <mapTrackerStatusBadge :tracker="tracker" /></td></tr>
     <tr><td>Internal</td><td>{{ tracker.internal }}</td></tr>
     <tr><td>Battery voltage</td><td>{{ tracker.battery_voltage }} V</td></tr>
     <tr><td>Tracker Type</td><td>{{ tracker.tracker_type }}</td></tr>
@@ -11,7 +11,12 @@
 </template>
 
 <script>
+import mapTrackerStatusBadge from '~/components/map-tracker-status-badge';
+
 export default {
+  components: {
+      mapTrackerStatusBadge,
+  },
   props: ['tracker'],
   computed: {
     last_reported() {
