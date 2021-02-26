@@ -9,27 +9,17 @@
 </template>
 
 <script>
-// FIXME: mapping of short to long values has to move back into cykel
 // FIXME: i18n
 const states = {
-  US: "Usable",
-  BR: "Broken",
-  IR: "In Repair",
-  MI: "Missing",
-}
-
-const availability_states = {
-  DI: "Disabled",
-  IU: "In Use",
-  AV: "Available",
+  "usable": "Usable",
+  "broken": "Broken",
+  "in_repair": "In Repair",
+  "missing": "Missing",
 }
 
 export default {
   props: ['vehicle'],
   computed: {
-    availablility() {
-      return availability_states[this.vehicle.availability_status];
-    },
     status() {
       return states[this.vehicle.state];
     },
