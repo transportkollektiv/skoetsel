@@ -4,7 +4,7 @@
     <tr><td>Tracker ID</td><td><strong>{{ tracker.device_id }}</strong> <mapTrackerStatusBadge :tracker="tracker" /></td></tr>
     <tr><td>Internal</td><td>{{ tracker.internal }}</td></tr>
     <tr><td>Battery voltage</td><td>{{ tracker.battery_voltage }} V</td></tr>
-    <tr><td>Tracker Type</td><td>{{ tracker.tracker_type }}</td></tr>
+    <tr v-if="tracker.tracker_type"><td>Tracker Type</td><td>{{ tracker.tracker_type.name }}</td></tr>
     <tr><td>Last Message</td><td>{{ last_reported }}</td></tr>
     <tr><td>Last Location update</td><td>{{ last_location_reported }}</td></tr>
   </table>
