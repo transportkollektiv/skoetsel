@@ -20,9 +20,9 @@
     "leaflet": "^1.7.1",
     "nuxt": "^2.15.8",
     "nuxt-leaflet": "0.0.25",
-    "vue": "2.6.12",
-    "vue-template-compiler": "2.6.12",
-    "vue-server-renderer": "2.6.12",
+    "vue": "2.6.14",
+    "vue-template-compiler": "2.6.14",
+    "vue-server-renderer": "2.6.14",
     "vue2-leaflet": "^2.6.0",
     "vue2-leaflet-locatecontrol": "git+https://git@github.com/stadtulm/vue2-leaflet-locatecontrol.git#9caae3c"
   },
