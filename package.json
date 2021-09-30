@@ -24,7 +24,7 @@
     "vue-template-compiler": "2.6.12",
     "vue-server-renderer": "2.6.12",
     "vue2-leaflet": "^2.6.0",
-    "vue2-leaflet-locatecontrol": "git+https://github.com/stadtulm/vue2-leaflet-locatecontrol.git#9caae3c"
+    "vue2-leaflet-locatecontrol": "git+https://git@github.com/stadtulm/vue2-leaflet-locatecontrol.git#9caae3c"
   },
   "devDependencies": {
     "eslint-config-prettier": "^7.2.0",
