@@ -1,7 +1,8 @@
 <template>
   <div>
     <b-card>
-      <b-form-checkbox v-model="filter.onlyUsable" name="vehicleFilterUsable">Show only usable vehicles</b-form-checkbox>
+      <b-form-checkbox inline v-model="filter.onlyUsable" name="vehicleFilterUsable">Show only usable vehicles</b-form-checkbox>
+      <b-form-checkbox inline v-model="filter.showLocation" name="vehicleFilterLocation">Show location</b-form-checkbox>
     </b-card>
     <ul class="container-fluid">
       <li
@@ -29,7 +30,6 @@
               <br/>
               <small class="below-icon">{{ vehicle.lock.lock_type.name }}</small>
             </div>
-            <div class="col"></div>
           </li>
           <li v-for="tracker in vehicle.trackers" class="row">
             <div class="col-4">
@@ -42,7 +42,7 @@
               <mapTrackerStatusBadge :tracker="tracker" />
               <b-badge pill class="badge-outline" v-if="tracker.internal">internal</b-badge>
             </div>
-            <div class="col-3 col-battery">
+            <div class="col-2 col-battery">
               <b-icon icon="battery" rotate="270"/>
               <b-progress v-if="tracker.battery_voltage" :max="maxBatteryVoltage" :precision="2" show-value> <!-- FIXME -->
                 <b-progress-bar :value="tracker.battery_voltage" :variant="tracker.battery_voltage >= tracker.tracker_type.battery_voltage_warning ? 'success' : (tracker.battery_voltage >= tracker.tracker_type.battery_voltage_critical ? 'warning' : 'danger')"></b-progress-bar>
@@ -56,9 +56,16 @@
                 <relativedatetime :value="tracker.last_reported" />
               </small>
             </div>
+            <div class="col" v-if="filter.showLocation">
+              {{ tracker.lat }}, {{ tracker.lng }}
+              <br/>
+              <small v-if="tracker.last_location_reported">
+                <datetime :value="tracker.last_location_reported"/>
+                <b-icon icon="exclamation-circle" variant="danger" v-if="(+new Date()) - Date.parse(tracker.last_location_reported) >= 1000 * 60 * 60 * 2" />
+              </small>
+            </div>
           </li>
         </ul>
-
       </li>
     </ul>
   </div>
@@ -82,7 +89,8 @@ export default {
       mapdata: [],
       maxBatteryVoltage: 3.9, // FIXME
       filter: {
-        onlyUsable: false
+        onlyUsable: false,
+        showLocation: true,
       }
     };
   },

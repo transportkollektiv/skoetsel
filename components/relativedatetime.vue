@@ -10,6 +10,7 @@ export default {
   props: ['value'],
   computed: {
     human() {
+      if (this.value === null || this.value.length == 0) return "";
       return relativeTime.from(new Date(this.value));
     },
   }
