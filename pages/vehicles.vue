@@ -27,7 +27,7 @@
               <b-icon icon="lock"/> <!-- lock.lock_type.form_factor -->
               <span>{{ vehicle.lock.lock_id }}</span>
               <br/>
-              <small>{{ vehicle.lock.lock_type.name }}</small>
+              <small class="below-icon">{{ vehicle.lock.lock_type.name }}</small>
             </div>
             <div class="col"></div>
           </li>
@@ -36,7 +36,7 @@
               <b-icon icon="geo"/> <!-- tracker_status -->
               <span>{{ tracker.device_id }}</span>
               <br/>
-              <small v-if="tracker.tracker_type">{{ tracker.tracker_type.name }}</small>
+              <small v-if="tracker.tracker_type"  class="below-icon">{{ tracker.tracker_type.name }}</small>
             </div>
             <div class="col-2">
               <mapTrackerStatusBadge :tracker="tracker" />
@@ -50,6 +50,10 @@
             </div>
             <div class="col">
               <datetime :value="tracker.last_reported"/>
+              <br/>
+              <small>
+                <relativedatetime :value="tracker.last_reported" />
+              </small>
             </div>
           </li>
         </ul>
@@ -63,12 +67,14 @@
 import mapVehicleStatusBadge from '~/components/map-vehicle-status-badge';
 import mapTrackerStatusBadge from '~/components/map-tracker-status-badge';
 import datetime from '~/components/datetime';
+import relativedatetime from '~/components/relativedatetime';
 
 export default {
   components: {
     mapVehicleStatusBadge,
     mapTrackerStatusBadge,
     datetime,
+    relativedatetime,
   },
   data() {
     return {
@@ -111,8 +117,8 @@ export default {
   .details li:hover {
     background: rgba(0,0,0,0.15);
   }
-  .details small {
-    margin-left:  1.6em;
+  .details small.below-icon {
+    margin-left: 1.6em;
   }
   .vehicle {
     padding-bottom: 1.5em;
