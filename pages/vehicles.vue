@@ -50,6 +50,7 @@
             </div>
             <div class="col">
               <datetime :value="tracker.last_reported"/>
+              <b-icon icon="exclamation-circle" variant="danger" v-if="(+new Date()) - Date.parse(tracker.last_reported) >= 1000 * 60 * 60 * 2" />
               <br/>
               <small>
                 <relativedatetime :value="tracker.last_reported" />
