@@ -1,6 +1,6 @@
 # skoetsel
 
-skoetsel is a maintenance tool for [OpenBike](https://github.com/stadtulm/OpenBike). It shows locations and states of the bikes and trackers to the service and maintenance crew.
+skoetsel is a maintenance tool for [OpenBike](https://github.com/transportkollektiv/openbike). It shows locations and states of the bikes and trackers to the service and maintenance crew.
 
 ## Build Setup
 
@@ -9,7 +9,7 @@ skoetsel is a maintenance tool for [OpenBike](https://github.com/stadtulm/OpenBi
 $ npm install
 ```
 
-skoetsel needs to reach your [cykel](https://github.com/stadtulm/cykel) instance. If it's not running on localhost:8000, you may want to set `export API_URL="https://api.dev.bike"`
+skoetsel needs to reach your [cykel](https://github.com/transportkollektiv/cykel) instance. If it's not running on localhost:8000, you may want to set `export API_URL="https://api.dev.bike"`
 
 ```bash
 # serve with hot reload at localhost:3000
